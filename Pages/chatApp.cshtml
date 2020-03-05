@@ -1,0 +1,59 @@
+﻿@page
+<!--
+Name: Navjot Sandhu
+Date:  3/4/2020
+AppDescription:  SignalR chat application for Cazton Interview
+File: chatApp.cshtml
+File Description:  HTML5 page that has UI elements for interacting with javascript, to facilitate chat functionality using signalR and asp.net core 3.1
+-->
+
+@model chat_signalr_tutorial.Pages.chatAppModel
+@{
+    ViewData["Title"] = "chatApp";
+}
+
+<h1>chatApp</h1>
+
+
+<div class="container">
+    <div class="col">
+
+
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-2">User</div>
+            <div class="col-4"><input type="text" id="userInput" /></div>
+        </div>
+        <div class="row">
+            <div class="col-2">Message</div>
+            <div class="col-4"><input type="text" id="messageInput" /></div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-6">
+                <input disabled="disabled" type="button" id="sendButton" value="Send Message" />     <!-- buttons for sending group messages, connecting, and disconnecting from server -->
+                <input type="button" id="connectButton" value="Connect" />
+                <input disabled="disabled" type="button" id="disconnectButton" value="Disconnect" />
+
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <select id="chatroomlist" multiple="true">
+            <!-- multiple select element for viewing users and selecting one when sending a private message;  currently doesn't check for multiple selected items, though does check for no user selected-->
+        </select>
+        <input disabled="disabled" type="button" id="sendPrivateMsgButton" value="Send Private Message" /> <!-- sends private message -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <ul id="messagesList"></ul>
+    </div>
+</div>
+<script src="~/js/signalr.js"></script>
+<script src="~/js/chat.js"></script>
