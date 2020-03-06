@@ -38,14 +38,21 @@ namespace chat_signalr_tutorial
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             //adds authentication capabilities using google oauth package for asp.net core 
-            services.AddAuthentication().AddGoogle(options =>
+            services.AddAuthentication().AddGoogle(googleOptions =>
             {
                 IConfigurationSection googleAuthNSection =
                     Configuration.GetSection("Authentication:Google");
 
-                options.ClientId = googleAuthNSection["ClientId"];
-                options.ClientSecret = googleAuthNSection["ClientSecret"];
+                googleOptions.ClientId = googleAuthNSection["ClientId"];
+                googleOptions.ClientSecret = googleAuthNSection["ClientSecret"];
             });
+
+            services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+            {
+                microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
+                microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
+            });
+
             //adds authorization functionality to chatApp; means user must login in order to view that page
             services.AddRazorPages().AddRazorPagesOptions(options =>
             {
