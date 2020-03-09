@@ -43,12 +43,15 @@ connection.on("UpdateUserList", function (userids) {
     var userid_array = userids;
 });
 var userIDString;
-function connect() { //connects to signalR chatroom
+
+
+async function connect() { //connects to signalR chatroom
 
     var user = document.getElementById("userInput").value;
     
     if (user !== "") {
-        connection.start().then(function () {
+        await connection.start();
+      
             userIDString = user;
             connection.invoke("SendUserID", user).catch(function (err) {
                 return console.error(err.toString());
@@ -58,9 +61,8 @@ function connect() { //connects to signalR chatroom
             document.getElementById("disconnectButton").disabled = false; //disconnect button is enabled when connected to server, in order to disconnect from server
             document.getElementById("connectButton").disabled = true; //connect button is disabled when successfully connected with server
             document.getElementById("userInput").disabled = true;   //username field is disabled when successfully connected with server
-        }).catch(function (err) {
-            return console.error(err.toString());
-        });
+        
+    
     } else { alert("please enter a username");} //tells user to enter username if field is blank
 };
 async function disconnect() {
@@ -69,24 +71,23 @@ async function disconnect() {
     connection.invoke("RemoveUserID", userIDString).catch(function (err) {
         return console.error(err.toString());
     });
-
+    connection.stop();
     return;
 };
 document.getElementById("connectButton").addEventListener("click", function (event) {
     connect();
 });
 document.getElementById("disconnectButton").addEventListener("click", function (event) {
-    disconnect().then(function () {
-        connection.stop().then(function () {
-            document.getElementById("sendButton").disabled = true;          //sendbutton is disabled when disconnected to server
-            document.getElementById("sendPrivateMsgButton").disabled = true;    //sendPrivateMsgButton is disabled when disconnected to server
-            document.getElementById("disconnectButton").disabled = true;   //disconnect button is disabled when disconnected to server
-            document.getElementById("connectButton").disabled = false;   //connect button is enabled when disconnected with server, in order to connect to server
-            document.getElementById("userInput").disabled = false;     //username field is enabled when disconnected with server, in order to provide username
-        }).catch(function (err) {
-            return console.error(err.toString());
-        });
-    });
+    async function disconnection() {
+        await disconnect();
+
+        document.getElementById("sendButton").disabled = true;          //sendbutton is disabled when disconnected to server
+        document.getElementById("sendPrivateMsgButton").disabled = true;    //sendPrivateMsgButton is disabled when disconnected to server
+        document.getElementById("disconnectButton").disabled = true;   //disconnect button is disabled when disconnected to server
+        document.getElementById("connectButton").disabled = false;   //connect button is enabled when disconnected with server, in order to connect to server
+        document.getElementById("userInput").disabled = false;     //username field is enabled when disconnected with server, in order to provide username
+    };
+    disconnection();
 });
 //group chat send button function
 document.getElementById("sendButton").addEventListener("click", function (event) {
