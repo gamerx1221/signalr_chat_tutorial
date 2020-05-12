@@ -1,4 +1,15 @@
 # signalr_chat_tutorial
+------------------------------------
+Update: 5/11/2020
+
+.net core 2.1 has default account and sign-in controller and views built-in into razor libraries
+
+In order to extend or change default views, see the following url:
+https://gavilan.blog/2019/07/18/accountcontroller-missing-razor-class-libraries-dotnet-cli-identity-scaffolding/
+
+---------------------------------------------------------------------
+
+
 Basic Chat application that works using SignalR and Asp.NET Core 3.1
 
 SignalR chat application using asp.net core 3.1
@@ -47,3 +58,6 @@ dotnet user-secrets set "Authentication:Microsoft:ClientSecret" "**********" --p
 
 
 you will need to setup clientid and client secret at respective developer sites for google and microsoft
+
+
+
